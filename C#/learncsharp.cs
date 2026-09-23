@@ -1,6 +1,6 @@
 // ╔══════════════════════════════════════════════════════════════════╗
-// ║              APRENDA C# EM UM ARQUIVO                           ║
-// ║   Guia didático e de referência rápida para a linguagem C#      ║
+// ║              APRENDA C# EM UM ARQUIVO                            ║
+// ║   Guia didático e de referência rápida para a linguagem C#       ║
 // ╚══════════════════════════════════════════════════════════════════╝
 
 // COMENTÁRIOS EM C#
@@ -83,6 +83,15 @@ namespace Learning.CSharp
             // As duas linhas abaixo produzem: "Hello World" na mesma linha.
             Console.Write("Hello ");
             Console.Write("World");
+
+            //Exemplo de comando para ler dados do teclado no console:
+            Console.WriteLine("Digite seu nome: ");
+            string nome = Console.ReadLine();
+
+            //A saída do ReadLine sempre é uma string, com isso podemos converter para outros tipos:
+            Console.WriteLine("Digite sua idade: ");
+            int idade = int.Parse(Console.ReadLine());
+
 
             // ─────────────────────────────────────────────────────────────────
             // TIPOS PRIMITIVOS E VARIÁVEIS
@@ -230,13 +239,35 @@ em uma nova linha! ""Uau!"", as massas gritaram";
             int i1 = 1, i2 = 2; // Declaração múltipla em uma linha (use com moderação)
 
             // Aritmética básica: +  -  *  /
+            // sempre faz primeiro multiplicação e divisão depois soma e subtração
+            // sem parentes, é feito primeiro i1 * 3 / 7 e depois o resto
             Console.WriteLine(i1 + i2 - i1 * 3 / 7); // => 3
+
+            // diferença em usar parentes: 1 + 2 - 1 => 2 esse é o resultado dentro do parentes
+            // lembrando como estamos usando dados inteiros tudo depois da virgula é jogado fora
+            Console.WriteLine((i1 + i2 - i1) * 3 / 7); // => 0
+
+            // agora se fizer com double o resultado => 0,857...
+            double d1 = 1, d2 = 2;
+            Console.WriteLine((d1 + d2 - d1) * 3 / 7); // => 0,857..
+
+            // para concatenar as strings é usado o operador "+"
+            Console.WriteLine("Hello" + "World"); // => HelloWorld
 
             // Módulo (%): retorna o RESTO da divisão inteira. Muito útil para verificar
             // paridade (n % 2 == 0 → par) ou criar ciclos (índice % tamanho).
             Console.WriteLine("11%3 = " + (11 % 3)); // => 2
 
             // Operadores relacionais (de comparação) — sempre retornam bool:
+            // ┌─────┬──────────────────────────────────────────────────────────┐
+            // │ ==  │ Comprar se os valores são iguais                         │
+            // │ !=  │ Verificar se são diferentes                              │
+            // │  >  │ Operador Maior que                                       │
+            // │  <  │ Operador Menor que                                       │
+            // │ <=  │ Operador Menor ou Igual que                              │
+            // │ >=  │ Operador Maior ou Igual que                              │
+            // └─────┴──────────────────────────────────────────────────────────┘
+
             Console.WriteLine("3 == 2? " + (3 == 2)); // false — igual a
             Console.WriteLine("3 != 2? " + (3 != 2)); // true  — diferente de
             Console.WriteLine("3 > 2? "  + (3 > 2));  // true  — maior que
@@ -253,6 +284,46 @@ em uma nova linha! ""Uau!"", as massas gritaram";
             // │  ^  │ XOR bit a bit: 1 somente se os bits forem diferentes     │
             // │  |  │ OR  bit a bit: 1 se pelo menos um dos bits for 1         │
             // └─────┴──────────────────────────────────────────────────────────┘
+
+            // Operador unário Lógico:
+            // ┌─────┬──────────────────────────────────────────────────────────┐
+            // │  !  │ Negação: true vira false e false vira true               │
+            // └─────┴──────────────────────────────────────────────────────────┘
+
+            Console.WriteLine(!false);  // output: True
+            Console.WriteLine(!true);    // output: False
+
+            // Operadores binários Lógicos:
+            // ┌─────┬──────────────────────────────────────────────────────────┐
+            // │  &  │ AND lógico: retorna true somente se os dois forem true   │
+            // │  ^  │ OR exclusivo: retorna true somente se um for true        │
+            // │  |  │ OR lógico: retorna true se um ou os dois forem true      │
+            // └─────┴──────────────────────────────────────────────────────────┘
+
+            //AND lógico:
+            Console.WriteLine(true & true);    // output: True
+            Console.WriteLine(true & false);   // output: False
+            Console.WriteLine(false & true);   // output: False
+            Console.WriteLine(false & false);  // output: False
+
+            //OR exclusivo:
+            Console.WriteLine(true ^ true);    // output: False
+            Console.WriteLine(true ^ false);   // output: True
+            Console.WriteLine(false ^ true);   // output: True
+            Console.WriteLine(false ^ false);  // output: False
+
+            //OR lógico:
+            Console.WriteLine(true | true);    // output: True
+            Console.WriteLine(true | false);   // output: True
+            Console.WriteLine(false | true);   // output: True
+            Console.WriteLine(false | false);  // output: False
+
+            // Operadores condicionais Lógicos:
+            // ┌─────┬──────────────────────────────────────────────────────────┐
+            // │ &&  │ AND:                                                     │
+            // │ ||  │ OR:                                                      │
+            // └─────┴──────────────────────────────────────────────────────────┘
+
 
             // Incremento e Decremento:
             // i++ (pós-incremento): usa o valor atual, DEPOIS incrementa.
@@ -405,7 +476,12 @@ em uma nova linha! ""Uau!"", as massas gritaram";
         public static void Classes()
         {
             // 'new' aloca memória e chama o construtor da classe para criar um objeto.
+            // cuidado para não fazer 'new' duas vezes no mesmo objeto pois isso zera ele.
+            // esse modo abaixo é o completo.
             Bicycle trek = new Bicycle();
+
+            // Novo modo mais simplificado com isso não precisa escrever Bicycle duas vezes:
+            Bicycle trek2 = new();
 
             // Chamando um método da instância:
             trek.SpeedUp(3);
@@ -421,6 +497,8 @@ em uma nova linha! ""Uau!"", as massas gritaram";
             PennyFarthing funbike = new PennyFarthing(1, 10);
             Console.WriteLine("Informações da funbike: " + funbike.Info());
 
+            Console.WriteLine();
+
             Console.Read();
         }
 
@@ -434,7 +512,7 @@ em uma nova linha! ""Uau!"", as massas gritaram";
         {
             OtherInterestingFeatures();
         }
-
+        
         // ═════════════════════════════════════════════════════════════════════
         //  SEÇÃO 3: CARACTERÍSTICAS AVANÇADAS E INTERESSANTES DO C#
         // ═════════════════════════════════════════════════════════════════════
